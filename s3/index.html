@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Dashboard</title>
+<style>
+  body { background-color: #0b0c10; color: #c5c6c7; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+  header { background-color: #1f2833; padding: 20px; text-align: center; color: #66fcf1; }
+  h1 { margin: 0; }
+  main { padding: 30px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+  .card {
+    background-color: #1f2833;
+    padding: 20px;
+    border-radius: 12px;
+    width: 280px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-5px); }
+  .card h2 { color: #45a29e; }
+  .card p { color: #c5c6c7; }
+  footer { text-align: center; padding: 15px; background-color: #1f2833; color: #66fcf1; }
+</style>
+</head>
+<body>
+<header>
+  <h1>AWS Solution Architect Demo</h1>
+</header>
+<main>
+  <div class="card">
+    <h2>Amazon S3</h2>
+    <p>Object storage used for this static site hosting. Fully serverless and scalable.</p>
+  </div>
+  <div class="card">
+    <h2>CloudFront</h2>
+    <p>Global content delivery and HTTPS for this website using AWS CDN.</p>
+  </div>
+  <div class="card">
+    <h2>Route 53</h2>
+    <p>Domain routing and DNS managed via AWS Route 53 for custom domains.</p>
+  </div>
+</main>
+<footer>
+  © 2025 AWS Free Tier Project | Designed by Daniel Dlaer
+</footer>
+</body>
+</html>
