@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Serverless Todo API (Lambda + API Gateway + DynamoDB)
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 10
+    MemorySize: 256
+Resources:
+  TodoTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: TodoTable
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+  TodoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: TodoFunction
+      Handler: app.lambda_handler
+      Environment:
+        Variables:
+          TABLE_NAME:
+            Ref: TodoTable
+      Policies:
+      - Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - dynamodb:PutItem
+          - dynamodb:GetItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+          - dynamodb:Query
+          - dynamodb:Scan
+          Resource:
+            Fn::GetAtt:
+            - TodoTable
+            - Arn
+        - Effect: Allow
+          Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+          Resource: '*'
+      Events:
+        ApiTodos:
+          Type: Api
+          Properties:
+            Path: /todos
+            Method: ANY
+        ApiTodoById:
+          Type: Api
+          Properties:
+            Path: /todos/{id}
+            Method: ANY
+      CodeUri: TodoFunction
+    Metadata:
+      SamResourceId: TodoFunction
+Outputs:
+  ApiUrl:
+    Description: HTTP API endpoint
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com
+  TodoTableName:
+    Value:
+      Ref: TodoTable
